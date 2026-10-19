@@ -1,0 +1,22 @@
+name: Java CI with Ant
+
+on:
+ push:
+  branches: ["KhanbanTasks"]
+  pull_request:
+   branches: ["KhanbanTasks"]
+
+   jobs:
+    build:
+    runs-on:ubuntu-latest
+
+    steps:
+    -uses:action/checkout@v4
+    -name:Set up JDK 11
+    uses:action/setup-java@v4
+    with:
+    java-vision:'11'
+    distribution:'temurin'
+    -name:Build with Ant
+    run:ant -noinput -buildfile
+  build.xml
