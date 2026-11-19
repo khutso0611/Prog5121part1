@@ -41,7 +41,8 @@ public class Main {
             System.out.println("\n========== QUICKCHAT MENU ==========");
             System.out.println("1) Send Messages");
             System.out.println("2) Show recently sent messages");
-            System.out.println("3) Quit");
+            System.out.println("3) Stored Messages");
+            System.out.println("4) Quit");
             System.out.print("Choose an option: ");
 
             String choice = scanner.nextLine().trim();
@@ -111,14 +112,14 @@ public class Main {
                         System.out.println(
                                 "Message Hash: " + message.getMessageHash());
 
-                        // Process the message using the existing Scanner
+                        // Process the message
                         String actionResult = message.SentMessage(scanner);
 
                         System.out.println(actionResult);
 
                         String status = message.getStatus();
 
-                        // Count only successfully processed messages
+                        // Count successfully processed messages
                         boolean processed = false;
 
                         if ("Sent".equals(status)
@@ -138,7 +139,7 @@ public class Main {
                             continue;
                         }
 
-                        // Display details of sent messages
+                        // Display sent message details
                         if ("Sent".equals(status)) {
                             System.out.println(
                                     "Message ID: " + message.getMessageID());
@@ -178,6 +179,10 @@ public class Main {
                     break;
 
                 case "3":
+                    storedMessagesMenu(scanner);
+                    break;
+
+                case "4":
                     System.out.println(
                             "Total messages sent: "
                             + Message.returnTotalMessages());
@@ -190,7 +195,75 @@ public class Main {
 
                 default:
                     System.out.println(
-                            "Invalid option. Please choose 1, 2, or 3.");
+                            "Invalid option. Please choose 1, 2, 3, or 4.");
+            }
+        }
+    }
+
+    // Part 3 Stored Messages submenu
+    public static void storedMessagesMenu(Scanner scanner) {
+
+        while (true) {
+            System.out.println("\n======= STORED MESSAGES MENU =======");
+            System.out.println("1) Display senders and recipients");
+            System.out.println("2) Display longest stored message");
+            System.out.println("3) Search message by ID");
+            System.out.println("4) Search messages by recipient");
+            System.out.println("5) Delete message by hash");
+            System.out.println("6) Display full message report");
+            System.out.println("7) Return to QuickChat Menu");
+            System.out.print("Choose an option: ");
+
+            String option = scanner.nextLine().trim();
+
+            switch (option) {
+
+                case "1":
+                    System.out.println(
+                            Message.displayStoredSendersAndRecipients());
+                    break;
+
+                case "2":
+                    System.out.println(
+                            Message.displayLongestStoredMessage());
+                    break;
+
+                case "3":
+                    System.out.print("Enter the message ID to search: ");
+                    String id = scanner.nextLine().trim();
+
+                    System.out.println(
+                            Message.searchMessageByID(id));
+                    break;
+
+                case "4":
+                    System.out.print(
+                            "Enter recipient cellphone number (+27XXXXXXXXX): ");
+                    String recipient = scanner.nextLine().trim();
+
+                    System.out.println(
+                            Message.searchMessagesByRecipient(recipient));
+                    break;
+
+                case "5":
+                    System.out.print("Enter the message hash to delete: ");
+                    String hash = scanner.nextLine().trim();
+
+                    System.out.println(
+                            Message.deleteMessageByHash(hash));
+                    break;
+
+                case "6":
+                    System.out.println(
+                            Message.displayFullReport());
+                    break;
+
+                case "7":
+                    return;
+
+                default:
+                    System.out.println(
+                            "Invalid option. Please choose from 1 to 7.");
             }
         }
     }
